@@ -49,12 +49,14 @@ public sealed class MbApifyer : IDisposable
         _RegisteredEndpoints[$"apify/{_myRecipientId}/{endpoint}/"] = actionToPerform;
     }
 
-    public async Task SendVoidRequestAsync(string recipientId, string endpoint, object payload)
+    public async Task SendVoidRequestAsync(string recipientId, string endpoint, object payload, int? timeoutInSeconds = null)
     {
         Guid requestId = Guid.NewGuid();
         string requestTopic = $"apify/{recipientId}/{endpoint}/{requestId}/request";
 
-        await _broker.PublishAsync(payload, requestTopic, CancellationToken.None);
+        CancellationToken token = timeoutInSeconds.HasValue ? new CancellationTokenSource(TimeSpan.FromSeconds(timeoutInSeconds.Value)).Token : CancellationToken.None;
+
+        await _broker.PublishAsync(payload, requestTopic, token);
     }
 
     public async Task<string> SendRequestAsync(string recipientId, string endpoint, object payload, int timeoutInSeconds = 30)
@@ -67,7 +69,9 @@ public sealed class MbApifyer : IDisposable
 
         await _broker.SubscribeAsync(responseTopic);
 
-        await _broker.PublishAsync(payload, requestTopic, CancellationToken.None);
+        CancellationToken publishToken = new CancellationTokenSource(TimeSpan.FromSeconds(timeoutInSeconds)).Token;
+
+        await _broker.PublishAsync(payload, requestTopic, publishToken);
 
         CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeoutInSeconds));
         
