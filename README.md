@@ -16,7 +16,7 @@ Now we can't really do that with message brokers. In best case we can get an Ack
 
 ## Installation
 
-Nuget package available on <a href="https://www.nuget.org/packages/NikosDelis.OpenSource.MbApifyer">nuget.org</a>! The nuget package will be updated on every tag (major and minor versions get tagged).
+Nuget package available on [nuget.org](https://www.nuget.org/packages/NikosDelis.OpenSource.MbApifyer)! The nuget package will be updated on every tag (major and minor versions get tagged).
 
 ## Usage
 
