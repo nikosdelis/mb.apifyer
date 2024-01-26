@@ -16,7 +16,7 @@ Now we can't really do that with message brokers. In best case we can get an Ack
 
 ## Installation
 
-There will be a nuget package of course but for the time being, just clone it and add a reference to your project or something.
+Nuget package available on <a href="https://www.nuget.org/packages/NikosDelis.OpenSource.MbApifyer">nuget.org</a>! The nuget package will be updated on every tag (major and minor versions get tagged).
 
 ## Usage
 
